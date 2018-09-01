@@ -47,11 +47,8 @@ var openweathermap = {
     },
 
     getData: async function executeParallelAsyncTasks () {
-        const [ currentWeather, forecast ] = await Promise.all([ this.getCurrentWeather(), this.getFiveDaysForecast() ]);
-        let weatherResponse = [];
-        this.filterCurrentWeather(currentWeather, weatherResponse);
-        return this.filterForecast(forecast, weatherResponse);
-        //return weatherResponse;
+        const [ forecast ] = await Promise.all([ this.getFiveDaysForecast() ]);
+        return this.filterForecast(forecast);
     },
 
     filterCurrentWeather: function (currentWeather, weatherResponse) {
@@ -62,50 +59,34 @@ var openweathermap = {
         weatherResponse.push(weather);
     },
 
-    filterForecast: function (forecast, weatherResponse) {
+    filterForecast: function (forecast) {
         let data = {};
         let values;
         let weatherValue = {};
         for (let i in forecast.list) {
-            let time = forecast.list[i].dt;
             let date = new Date(forecast.list[i].dt*1000);
             let key = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
             if (date.getHours() == 12) {
-                console.log('ADD DAY '+date);
-                weatherValue.temp_min = forecast.list[i].main.temp_min;
-                weatherValue.temp_max = forecast.list[i].main.temp_min;
-                weatherValue.weather = forecast.list[i].weather[0].description;
-                if (key in data) {
-                    console.log('EXISTE');
-                    values = data[key];
-                } else {
-                    console.log('NO EXISTE');
-                    values = {};
-                }
+                weatherValue = this.getWeatherData(forecast.list[i]);
+                values = key in data ? data[key] : {};
                 values.day = weatherValue;
                 data[key] = values;
             } else if (date.getHours() == 0) {
-                console.log('ADD NIGHT '+date);
-                weatherValue.temp_min = forecast.list[i].main.temp_min;
-                weatherValue.temp_max = forecast.list[i].main.temp_min;
-                weatherValue.weather = forecast.list[i].weather[0].description;
-                if (key in data) {
-                    console.log('EXISTE');
-                    values = data[key];
-                } else {
-                    console.log('NO EXISTE');
-                    values = {};
-                }
+                weatherValue = this.getWeatherData(forecast.list[i]);
+                values = key in data ? data[key] : {};
                 values.night = weatherValue;
                 data[key] = values;
             }
         }
-        console.log(data);
         return data;
     },
 
-    formatDate: function (timestamp) {
-
+    getWeatherData: function (forecast) {
+        let weatherValue = {};
+        weatherValue.temp_min = forecast.main.temp_min;
+        weatherValue.temp_max = forecast.main.temp_min;
+        weatherValue.weather = forecast.weather[0].description;
+        return weatherValue;
     }
 };
 
