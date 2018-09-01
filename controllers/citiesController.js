@@ -10,7 +10,7 @@ exports.read = async (ctx) => {
     // Filter results
     let result = [];
     for(const key in jsonContent) {
-        if (jsonContent[key].name.toLowerCase().startsWith(query)) {
+        if ((jsonContent[key].name.toLowerCase().startsWith(query))&&(jsonContent[key].country='AR')) {
             result.push(jsonContent[key]);
         }
     }
