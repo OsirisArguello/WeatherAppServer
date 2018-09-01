@@ -65,13 +65,15 @@ var openweathermap = {
         let weatherValue = {};
         for (let i in forecast.list) {
             let date = new Date(forecast.list[i].dt*1000);
-            let key = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
             if (date.getHours() == 12) {
+                let key = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate();
                 weatherValue = this.getWeatherData(forecast.list[i]);
                 values = key in data ? data[key] : {};
                 values.day = weatherValue;
                 data[key] = values;
             } else if (date.getHours() == 0) {
+                // Le resto uno porque la hora 0:00 la toma como si fuera el día siguiente
+                let key = date.getFullYear()+'-'+(date.getMonth()+1)+'-'+(date.getDate()-1);
                 weatherValue = this.getWeatherData(forecast.list[i]);
                 values = key in data ? data[key] : {};
                 values.night = weatherValue;
@@ -83,8 +85,7 @@ var openweathermap = {
 
     getWeatherData: function (forecast) {
         let weatherValue = {};
-        weatherValue.temp_min = forecast.main.temp_min;
-        weatherValue.temp_max = forecast.main.temp_min;
+        weatherValue.temperature = (forecast.main.temp_min + forecast.main.temp_min) / 2;
         weatherValue.weather = forecast.weather[0].description;
         return weatherValue;
     }
