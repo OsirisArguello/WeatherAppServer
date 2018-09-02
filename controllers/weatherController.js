@@ -116,7 +116,7 @@ var openweathermap = {
                 }
                 // Tomo el icono de las 9 horas como el representativo de la mañana
                 if (keyHour == 9) {
-                    data[currentDate].day.description = forecast.list[i].weather[0].description;
+                    data[currentDate].day.icon = forecast.list[i].weather[0].icon;
                 }
                 let temp = data[currentDate].day.temperature === undefined ? 0 : data[currentDate].day.temperature;
                 let count = data[currentDate].day.size === undefined ? 0 : data[currentDate].day.size;
@@ -130,7 +130,7 @@ var openweathermap = {
                 }
                 // Tomo el icono de las 21 horas con el representativo de la noche
                 if (keyHour == 21) {
-                    data[currentDate].night.description = forecast.list[i].weather[0].description;
+                    data[currentDate].night.icon = forecast.list[i].weather[0].icon;
                 }
                 let temp = data[currentDate].night.temperature === undefined ? 0 : data[currentDate].night.temperature;
                 let count = data[currentDate].night.size === undefined ? 0 : data[currentDate].night.size;
@@ -161,12 +161,44 @@ var openweathermap = {
         weatherValue.temperature = (forecast.main.temp_min + forecast.main.temp_max) / 2;
         weatherValue.weather = forecast.weather[0].description;
         return weatherValue;
+    },
+
+    getLondonWeather: function () {
+        let data = {};
+        let date = new Date();
+        for (let i = 0; i < 5; i++) {
+            let keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
+            data[keyDate] = {};
+            data[keyDate].day = {};
+            data[keyDate].night = {};
+            data[keyDate].day.temperature = "12.1";
+            data[keyDate].day.icon = "50d";
+            data[keyDate].night.temperature = "2.1";
+            data[keyDate].night.icon = "50n";
+            date.setDate(date.getDate() + 1);
+        }
+        return data;
     }
 };
 
 exports.read = async (ctx) => {
     const city = ctx.params.city;
     openweathermap.city = city;
-    return openweathermap.getData();
+    switch (city) {
+        case "1":
+            return openweathermap.getLondonWeather();
+            break;
+        case "2":
+            return openweathermap.getLondonWeather();
+            break;
+        case "3":
+            return openweathermap.getLondonWeather();
+            break;
+        case "4":
+            return openweathermap.getLondonWeather();
+            break;
+        default:
+            return openweathermap.getData();
+    }
 };
 
