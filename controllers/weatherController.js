@@ -105,7 +105,6 @@ var openweathermap = {
         for (let i in forecast.list) {
             let keyDate = forecast.list[i].dt_txt.split(' ')[0];
             let keyHour = forecast.list[i].dt_txt.split(' ')[1].split(':')[0];
-
             if (currentDate === undefined) {
                 currentDate = keyDate;
             }
@@ -116,7 +115,7 @@ var openweathermap = {
                 if(data[keyDate].day === undefined) {
                     data[keyDate].day = {};
                 }
-                data[keyDate].day.icon = forecast.list[i].weather[0].icon;
+                data[keyDate].day.icon = forecast.list[i].weather[0].icon.replace(/.$/,"d");
                 let temp = data[keyDate].day.temperature === undefined ? 0 : data[keyDate].day.temperature;
                 let count = data[keyDate].day.size === undefined ? 0 : data[keyDate].day.size;
                 temp += (forecast.list[i].main.temp_min + forecast.list[i].main.temp_max) / 2;
@@ -128,7 +127,7 @@ var openweathermap = {
                     data[keyDate].night = {};
                 }
 
-                data[keyDate].night.icon = forecast.list[i].weather[0].icon;
+                data[keyDate].night.icon = forecast.list[i].weather[0].icon.replace(/.$/,"n");
                 let temp = data[keyDate].night.temperature === undefined ? 0 : data[keyDate].night.temperature;
                 let count = data[keyDate].night.size === undefined ? 0 : data[keyDate].night.size;
                 temp += (forecast.list[i].main.temp_min + forecast.list[i].main.temp_max) / 2;
