@@ -2,6 +2,7 @@ const { status, json } = require('server/reply');
 
 exports.read = async (ctx) => {
     const query = ctx.query.query.toLowerCase();
+    console.log("Obteniendo ciudades que comienzan con "+query);
     const fs = require("fs");
     // Get content from file
     const contents = fs.readFileSync("./data/city.list.json");
