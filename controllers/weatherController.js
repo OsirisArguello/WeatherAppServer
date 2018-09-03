@@ -152,7 +152,21 @@ var openweathermap = {
                 }
             }
         }
-        return data;
+        let myArray = [];
+        let today = undefined;
+        let dates = Object.keys(data);
+        for (let i = 0; i < 5; i++) {
+            myArray[i] = {};
+            myArray[i].date = dates[i];
+            myArray[i].day = {};
+            myArray[i].day.temperature = data[myArray[i].date].day.temperature;
+            myArray[i].day.icon = data[myArray[i].date].day.icon;
+            myArray[i].night = {};
+            myArray[i].night.temperature = data[myArray[i].date].night.temperature;
+            myArray[i].night.icon = data[myArray[i].date].night.icon;
+        }
+
+        return myArray;
     },
 
     getWeatherData: function (forecast, hour) {
@@ -164,91 +178,98 @@ var openweathermap = {
     },
 
     getLondonWeather: function () {
-        let data = {};
+        let data = [];
         let date = new Date();
         for (let i = 0; i < 5; i++) {
             let keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
-            data[keyDate] = {};
-            data[keyDate].day = {};
-            data[keyDate].night = {};
-            data[keyDate].day.temperature = "12.1";
-            data[keyDate].day.icon = "50d";
-            data[keyDate].night.temperature = "2.1";
-            data[keyDate].night.icon = "50n";
+            let arrayDate = {};
+            let day = {};
+            let night= {};
+            data[i] = [];
+            arrayDate.date = keyDate;
+            day.temperature = "12.1";
+            day.icon = "50d";
+            night.temperature = "2.1";
+            night.icon = "50n";
+            arrayDate.day = day;
+            arrayDate.night = night;
+            data[i] = arrayDate;
             date.setDate(date.getDate() + 1);
         }
         return data;
     },
 
     getCancunWeather: function () {
-        let data = {};
+        let data = [];
         let date = new Date();
         for (let i = 0; i < 5; i++) {
             let keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
-            data[keyDate] = {};
-            data[keyDate].day = {};
-            data[keyDate].night = {};
-            data[keyDate].day.temperature = "12.1";
-            data[keyDate].night.temperature = "2.1";
+            data[i] = {};
+            data[i].date = keyDate;
+            data[i].day = {};
+            data[i].night = {};
+            data[i].day.temperature = "12.1";
+            data[i].night.temperature = "2.1";
             date.setDate(date.getDate() + 1);
         }
         date = new Date();
         let keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
-        data[keyDate].day.icon = "01d";
-        data[keyDate].night.icon = "01n";
+        data[0].day.icon = "01d";
+        data[0].night.icon = "01n";
         date.setDate(date.getDate() + 1);
         keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
-        data[keyDate].day.icon = "02d";
-        data[keyDate].night.icon = "02n";
+        data[1].day.icon = "02d";
+        data[1].night.icon = "02n";
         date.setDate(date.getDate() + 1);
         keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
-        data[keyDate].day.icon = "03d";
-        data[keyDate].night.icon = "03n";
+        data[2].day.icon = "03d";
+        data[2].night.icon = "03n";
         date.setDate(date.getDate() + 1);
         keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
-        data[keyDate].day.icon = "04d";
-        data[keyDate].night.icon = "04n";
+        data[3].day.icon = "04d";
+        data[3].night.icon = "04n";
         date.setDate(date.getDate() + 1);
         keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
-        data[keyDate].day.icon = "09d";
-        data[keyDate].night.icon = "09n";
+        data[4].day.icon = "09d";
+        data[4].night.icon = "09n";
         date.setDate(date.getDate() + 1);
 
         return data;
     },
 
     getHabanaWeather: function () {
-        let data = {};
+        let data = [];
         let date = new Date();
         for (let i = 0; i < 5; i++) {
             let keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
-            data[keyDate] = {};
-            data[keyDate].day = {};
-            data[keyDate].night = {};
-            data[keyDate].day.temperature = "12.1";
-            data[keyDate].night.temperature = "2.1";
+            data[i] = {};
+            data[i].date = keyDate;
+            data[i].day = {};
+            data[i].night = {};
+            data[i].day.temperature = "12.1";
+            data[i].night.temperature = "2.1";
             date.setDate(date.getDate() + 1);
         }
         date = new Date();
         let keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
-        data[keyDate].day.icon = "10d";
-        data[keyDate].night.icon = "10n";
+        data[0].day.icon = "10d";
+        data[0].night.icon = "10n";
         date.setDate(date.getDate() + 1);
         keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
-        data[keyDate].day.icon = "11d";
-        data[keyDate].night.icon = "11n";
+        data[1].day.icon = "11d";
+        data[1].night.icon = "11n";
         date.setDate(date.getDate() + 1);
         keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
-        data[keyDate].day.icon = "13d";
-        data[keyDate].night.icon = "13n";
+        data[2].day.icon = "13d";
+        data[2].night.icon = "13n";
         date.setDate(date.getDate() + 1);
         keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
-        data[keyDate].day.icon = "50d";
-        data[keyDate].night.icon = "50n";
+        data[3].day.icon = "50d";
+        data[3].night.icon = "50n";
         date.setDate(date.getDate() + 1);
         keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
-        data[keyDate].day.icon = "09d";
-        data[keyDate].night.icon = "09n";
+        data[4].day.icon = "09d";
+        data[4].night.icon = "09n";
         date.setDate(date.getDate() + 1);
 
         return data;
