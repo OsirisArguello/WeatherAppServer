@@ -108,39 +108,36 @@ var openweathermap = {
 
             if (currentDate === undefined) {
                 currentDate = keyDate;
-                data[currentDate] = {};
+            }
+            if (data[keyDate] === undefined) {
+                data[keyDate] = {};
             }
             if (keyHour < 12) {
-                if(data[currentDate].day === undefined) {
-                    data[currentDate].day = {};
+                if(data[keyDate].day === undefined) {
+                    data[keyDate].day = {};
                 }
-                // Tomo el icono de las 9 horas como el representativo de la mañana
-                if (keyHour == 9) {
-                    data[currentDate].day.icon = forecast.list[i].weather[0].icon;
-                }
-                let temp = data[currentDate].day.temperature === undefined ? 0 : data[currentDate].day.temperature;
-                let count = data[currentDate].day.size === undefined ? 0 : data[currentDate].day.size;
+                data[keyDate].day.icon = forecast.list[i].weather[0].icon;
+                let temp = data[keyDate].day.temperature === undefined ? 0 : data[keyDate].day.temperature;
+                let count = data[keyDate].day.size === undefined ? 0 : data[keyDate].day.size;
                 temp += (forecast.list[i].main.temp_min + forecast.list[i].main.temp_max) / 2;
                 count++;
-                data[currentDate].day.temperature = temp;
-                data[currentDate].day.size = count;
+                data[keyDate].day.temperature = temp;
+                data[keyDate].day.size = count;
             } else {
-                if(data[currentDate].night === undefined) {
-                    data[currentDate].night = {};
+                if(data[keyDate].night === undefined) {
+                    data[keyDate].night = {};
                 }
-                // Tomo el icono de las 21 horas con el representativo de la noche
-                if (keyHour == 21) {
-                    data[currentDate].night.icon = forecast.list[i].weather[0].icon;
-                }
-                let temp = data[currentDate].night.temperature === undefined ? 0 : data[currentDate].night.temperature;
-                let count = data[currentDate].night.size === undefined ? 0 : data[currentDate].night.size;
+
+                data[keyDate].night.icon = forecast.list[i].weather[0].icon;
+                let temp = data[keyDate].night.temperature === undefined ? 0 : data[keyDate].night.temperature;
+                let count = data[keyDate].night.size === undefined ? 0 : data[keyDate].night.size;
                 temp += (forecast.list[i].main.temp_min + forecast.list[i].main.temp_max) / 2;
                 count++;
-                data[currentDate].night.temperature = temp;
-                data[currentDate].night.size = count;
+                data[keyDate].night.temperature = temp;
+                data[keyDate].night.size = count;
             }
             if (currentDate !== keyDate || (i == (forecast.list.length - 1))) {
-                if (data[currentDate].day != undefined) {
+                if (data[currentDate].day !== undefined) {
                     data[currentDate].day.temperature = (data[currentDate].day.temperature / data[currentDate].day.size).toFixed(2);
                     delete data[currentDate].day.size;
                 }
@@ -158,14 +155,15 @@ var openweathermap = {
         for (let i = 0; i < 5; i++) {
             myArray[i] = {};
             myArray[i].date = dates[i];
-            myArray[i].day = {};
-            myArray[i].day.temperature = data[myArray[i].date].day.temperature;
-            myArray[i].day.icon = data[myArray[i].date].day.icon;
+            if (data[myArray[i].date].day !== undefined) {
+                myArray[i].day = {};
+                myArray[i].day.temperature = data[myArray[i].date].day.temperature;
+                myArray[i].day.icon = data[myArray[i].date].day.icon;
+            }
             myArray[i].night = {};
             myArray[i].night.temperature = data[myArray[i].date].night.temperature;
             myArray[i].night.icon = data[myArray[i].date].night.icon;
         }
-
         return myArray;
     },
 
