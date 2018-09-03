@@ -178,7 +178,82 @@ var openweathermap = {
             date.setDate(date.getDate() + 1);
         }
         return data;
+    },
+
+    getCancunWeather: function () {
+        let data = {};
+        let date = new Date();
+        for (let i = 0; i < 5; i++) {
+            let keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
+            data[keyDate] = {};
+            data[keyDate].day = {};
+            data[keyDate].night = {};
+            data[keyDate].day.temperature = "12.1";
+            data[keyDate].night.temperature = "2.1";
+            date.setDate(date.getDate() + 1);
+        }
+        date = new Date();
+        let keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
+        data[keyDate].day.icon = "01d";
+        data[keyDate].night.icon = "01n";
+        date.setDate(date.getDate() + 1);
+        keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
+        data[keyDate].day.icon = "02d";
+        data[keyDate].night.icon = "02n";
+        date.setDate(date.getDate() + 1);
+        keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
+        data[keyDate].day.icon = "03d";
+        data[keyDate].night.icon = "03n";
+        date.setDate(date.getDate() + 1);
+        keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
+        data[keyDate].day.icon = "04d";
+        data[keyDate].night.icon = "04n";
+        date.setDate(date.getDate() + 1);
+        keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
+        data[keyDate].day.icon = "09d";
+        data[keyDate].night.icon = "09n";
+        date.setDate(date.getDate() + 1);
+
+        return data;
+    },
+
+    getHabanaWeather: function () {
+        let data = {};
+        let date = new Date();
+        for (let i = 0; i < 5; i++) {
+            let keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
+            data[keyDate] = {};
+            data[keyDate].day = {};
+            data[keyDate].night = {};
+            data[keyDate].day.temperature = "12.1";
+            data[keyDate].night.temperature = "2.1";
+            date.setDate(date.getDate() + 1);
+        }
+        date = new Date();
+        let keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
+        data[keyDate].day.icon = "10d";
+        data[keyDate].night.icon = "10n";
+        date.setDate(date.getDate() + 1);
+        keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
+        data[keyDate].day.icon = "11d";
+        data[keyDate].night.icon = "11n";
+        date.setDate(date.getDate() + 1);
+        keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
+        data[keyDate].day.icon = "13d";
+        data[keyDate].night.icon = "13n";
+        date.setDate(date.getDate() + 1);
+        keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
+        data[keyDate].day.icon = "50d";
+        data[keyDate].night.icon = "50n";
+        date.setDate(date.getDate() + 1);
+        keyDate = date.toISOString().slice(0,10).replace(/-/g,"-");;
+        data[keyDate].day.icon = "09d";
+        data[keyDate].night.icon = "09n";
+        date.setDate(date.getDate() + 1);
+
+        return data;
     }
+
 };
 
 exports.read = async (ctx) => {
@@ -189,10 +264,10 @@ exports.read = async (ctx) => {
             return openweathermap.getLondonWeather();
             break;
         case "2":
-            return openweathermap.getLondonWeather();
+            return openweathermap.getCancunWeather();
             break;
         case "3":
-            return openweathermap.getLondonWeather();
+            return openweathermap.getHabanaWeather();
             break;
         case "4":
             return openweathermap.getLondonWeather();
