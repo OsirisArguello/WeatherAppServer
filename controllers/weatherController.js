@@ -258,6 +258,7 @@ var openweathermap = {
 
 exports.read = async (ctx) => {
     const city = ctx.params.city;
+    console.log("Obteniendo información del clima de la ciudad "+city);
     openweathermap.city = city;
     switch (city) {
         case "1":
